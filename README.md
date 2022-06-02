@@ -34,6 +34,8 @@ The Output of this would be:
 ratio + don't care + didn't ask
 ```
 
+You can find all supported "word groups"/"phrases" in [words.txt](https://github.com/StckOverflw/ratio-kt/blob/main/words.txt)
+
 ### Credit
 Thanks to [DrSchlaubi](https://github.com/DrSchlaubi/) for making the Kotlin code generator, 
 without him I'd have to implement all the "phrases" myself!
