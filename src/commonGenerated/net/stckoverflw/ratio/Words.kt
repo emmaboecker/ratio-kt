@@ -3,6 +3,7 @@
 package net.stckoverflw.ratio
 
 import kotlin.Suppress
+import kotlin.js.JsName
 
 public val L: Word = Word("L")
 
@@ -12,10 +13,12 @@ public val triggered: Word = Word("triggered")
 
 public val donowalled: Word = Word("donowalled")
 
+@JsName("youre")
 public val `you're*`: Word = Word("you're*")
 
 public val reported: Word = Word("reported")
 
+@JsName("GG")
 public val `GG!`: Word = Word("GG!")
 
 public val cancelled: Word = Word("cancelled")
@@ -28,12 +31,14 @@ public val cope: Word = Word("cope")
 
 public val jealous: Word = Word("jealous")
 
+@JsName("dont")
 public object `don't` : ChainableWord("don't") {
   public val care: Word = Word("care")
 
   public val swear: Word = Word("swear")
 }
 
+@JsName("didnt")
 public object `didn't` : ChainableWord("didn't") {
   public val ask: Word = Word("ask")
 }
@@ -93,6 +98,7 @@ public object `get` : ChainableWord("get") {
 }
 
 public object ok : ChainableWord("ok") {
+  @JsName("and")
   public val `and?`: Word = Word("and?")
 }
 
@@ -108,6 +114,7 @@ public object not : ChainableWord("not") {
   public val based: Word = Word("based")
 
   public object funny : ChainableWord.InnerChainedWord("funny") {
+    @JsName("didnt")
     public object `didn't` : ChainableWord.InnerChainedWord("didn't") {
       public val laugh: Word = Word("laugh")
     }

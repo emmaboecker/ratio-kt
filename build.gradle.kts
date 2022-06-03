@@ -1,5 +1,4 @@
 import net.stckoverflw.ratio.generator.GenerateTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform") version "1.6.21"
@@ -7,13 +6,10 @@ plugins {
 }
 
 group = "net.stckoverflw"
-version = "1.0"
+version = "1.1"
 
 repositories {
     mavenCentral()
-}
-
-dependencies {
 }
 
 kotlin {
@@ -24,6 +20,19 @@ kotlin {
             kotlinOptions.jvmTarget = "1.8"
         }
     }
+
+    js(BOTH) {
+        browser()
+        nodejs()
+    }
+
+    mingwX64()
+    linuxX64()
+    tvos()
+    watchos()
+    ios()
+    macosArm64()
+    macosX64()
 
     sourceSets {
         commonMain {

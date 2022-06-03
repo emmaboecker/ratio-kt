@@ -11,14 +11,17 @@ import java.sql.Types
 private val WORD = ClassName("net.stckoverflw.ratio", "Word")
 private val CHAINABLE_WORD = ClassName("net.stckoverflw.ratio", "ChainableWord")
 private val INNER_CHAINED_WORD = CHAINABLE_WORD.nestedClass("InnerChainedWord")
+private val JS_NAME = ClassName("kotlin.js", "JsName")
 
 fun List<WordSpec>.generateTo(path: Path) {
     val supressInspections = listOf("ObjectPropertyName", "ClassName", "DANGEROUS_CHARACTERS")
     val format = "%S,".repeat(supressInspections.size).trimEnd(',')
     val file = FileSpec.builder("net.stckoverflw.ratio", "Words")
-        .addAnnotation(AnnotationSpec.builder(Suppress::class)
-            .addMember(format, *supressInspections.toTypedArray())
-            .build())
+        .addAnnotation(
+            AnnotationSpec.builder(Suppress::class)
+                .addMember(format, *supressInspections.toTypedArray())
+                .build()
+        )
         .addWords(this)
         .build()
 
@@ -50,7 +53,11 @@ private fun TypeSpec.Builder.addWords(wordSpecs: List<WordSpec>): TypeSpec.Build
 }
 
 private fun FileSpec.Builder.addChained(wordSpec: ChainedWordSpec) {
-    val clazz = TypeSpec.objectBuilder(wordSpec.word)
+    val clazz = TypeSpec.objectBuilder(wordSpec.word).apply {
+        if (wordSpec.word != wordSpec.sanitizedName) {
+            addAnnotation(JsNameAnnotation(wordSpec))
+        }
+    }
         .superclass(CHAINABLE_WORD)
         .addSuperclassConstructorParameter("""%S""", wordSpec.word)
         .addWords(wordSpec.children)
@@ -59,7 +66,11 @@ private fun FileSpec.Builder.addChained(wordSpec: ChainedWordSpec) {
 }
 
 private fun TypeSpec.Builder.addChained(wordSpec: ChainedWordSpec) {
-    val clazz = TypeSpec.objectBuilder(wordSpec.word)
+    val clazz = TypeSpec.objectBuilder(wordSpec.word).apply {
+        if (wordSpec.word != wordSpec.sanitizedName) {
+            addAnnotation(JsNameAnnotation(wordSpec))
+        }
+    }
         .superclass(INNER_CHAINED_WORD)
         .addWords(wordSpec.children)
         .addSuperclassConstructorParameter("""%S""", wordSpec.word)
@@ -68,8 +79,19 @@ private fun TypeSpec.Builder.addChained(wordSpec: ChainedWordSpec) {
 }
 
 private fun FileSpec.Builder.addLiteral(wordSpec: LiteralWordSpec) = addProperty(wordSpec.toProperty())
-private fun TypeSpec .Builder.addLiteral(wordSpec: LiteralWordSpec) = addProperty(wordSpec.toProperty())
+private fun TypeSpec.Builder.addLiteral(wordSpec: LiteralWordSpec) = addProperty(wordSpec.toProperty())
+
+private val WordSpec.sanitizedName: String get() = word.replace("""\W""".toRegex(), "")
 
 private fun LiteralWordSpec.toProperty() = PropertySpec.builder(word, WORD)
+    .apply {
+        if (word != sanitizedName) {
+            addAnnotation(JsNameAnnotation(this@toProperty))
+        }
+    }
     .initializer("""Word("${word}")""")
+    .build()
+
+private fun JsNameAnnotation(spec: WordSpec) = AnnotationSpec.builder(JS_NAME)
+    .addMember("%S", spec.sanitizedName)
     .build()
