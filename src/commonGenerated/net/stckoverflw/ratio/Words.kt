@@ -54,11 +54,9 @@ public object stay : ChainableWord("stay") {
 }
 
 public object mald : ChainableWord("mald") {
-  public object see : ChainableWord.InnerChainedWord("see") {
-    public object the : ChainableWord.InnerChainedWord("the") {
-      public object cope : ChainableWord.InnerChainedWord("cope") {
-        public val harder: Word = Word("harder")
-      }
+  public object seethe : ChainableWord.InnerChainedWord("seethe") {
+    public object cope : ChainableWord.InnerChainedWord("cope") {
+      public val harder: Word = Word("harder")
     }
   }
 }
