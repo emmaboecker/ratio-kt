@@ -12,7 +12,7 @@ repositories {
 
 ```kotlin
 dependencies {
-    implementation("net.stckoverflw", "ratio-kt", "1.0")
+    implementation("net.stckoverflw", "ratio-kt", "1.2")
 }
 ```
 
