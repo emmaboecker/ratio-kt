@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.squareup", "kotlinpoet", "1.11.0")
+    implementation("com.squareup", "kotlinpoet", "1.12.0")
     implementation(gradleApi())
     implementation(localGroovy())
 }
