@@ -31,6 +31,10 @@ public val cope: Word = Word("cope")
 
 public val jealous: Word = Word("jealous")
 
+public val benny: Word = Word("benny")
+
+public val f: Word = Word("f")
+
 @JsName("dont")
 public object `don't` : ChainableWord("don't") {
   public val care: Word = Word("care")
@@ -41,6 +45,14 @@ public object `don't` : ChainableWord("don't") {
 @JsName("didnt")
 public object `didn't` : ChainableWord("didn't") {
   public val ask: Word = Word("ask")
+
+  public object make : ChainableWord.InnerChainedWord("make") {
+    public object it : ChainableWord.InnerChainedWord("it") {
+      public object to : ChainableWord.InnerChainedWord("to") {
+        public val playoffs: Word = Word("playoffs")
+      }
+    }
+  }
 }
 
 public object cry : ChainableWord("cry") {
@@ -137,4 +149,14 @@ public object straight : ChainableWord("straight") {
 
 public object rip : ChainableWord("rip") {
   public val bozo: Word = Word("bozo")
+}
+
+public object take : ChainableWord("take") {
+  public object the : ChainableWord.InnerChainedWord("the") {
+    public val L: Word = Word("L")
+  }
+}
+
+public object SUPER : ChainableWord("SUPER") {
+  public val F: Word = Word("F")
 }
